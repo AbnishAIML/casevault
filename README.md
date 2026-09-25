@@ -1,78 +1,132 @@
-# CASEVAULT — Secure Legal & Investigation Document Management System
+<div align="center">
 
-> **Problem Statement ID:** 26190  
-> **Problem Statement Title:** Secure Digital Document Management System for Legal and Investigation Documents  
-> **Organization:** Ministry of Home Affairs (MHA)  
-> **Department:** National Crime Records Bureau (NCRB), Women Safety Division  
-> **Theme:** Blockchain & Cybersecurity  
-> **Tagline:** *"Secure Documents. Trusted Evidence. Smarter Investigations."*
+# 🛡️ CaseVault
+
+### Secure Digital Document & Forensic Evidence Management System
+
+**Secure Documents. Trusted Evidence. Smarter Investigations.**
+
+[![Node.js](https://img.shields.io/badge/Node.js-v18%2B-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Atlas%20%7C%20Local-47A248?style=flat-square&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![Express.js](https://img.shields.io/badge/Express.js-Backend-000000?style=flat-square&logo=express&logoColor=white)](https://expressjs.com/)
+[![License](https://img.shields.io/badge/License-Government%20Use-blue?style=flat-square)](#license)
+[![SIH](https://img.shields.io/badge/SIH-Problem%20Statement%2026190-orange?style=flat-square)](#)
+
+**Problem Statement:** #26190 — Secure Digital Document Management System for Legal and Investigation Documents<br>
+**Organization:** Ministry of Home Affairs (MHA) · **Department:** National Crime Records Bureau (NCRB), Women Safety Division<br>
+**Theme:** Blockchain & Cybersecurity
+
+</div>
 
 ---
 
-## 1. Executive Summary
+## 📑 Table of Contents
 
-**CASEVAULT** is an enterprise-grade digital document and forensic evidence management platform built for law enforcement agencies, cybercrime investigative cells, forensic laboratories, public prosecutors, and judicial courts.
+- [Overview](#overview)
+- [Key Features](#key-features)
+- [System Architecture](#system-architecture)
+- [Technology Stack](#technology-stack)
+- [Folder Structure](#folder-structure)
+- [Role-Based Access Control](#role-based-access-control-rbac)
+- [Getting Started](#getting-started)
+- [Environment Configuration](#environment-configuration)
+- [API Reference](#api-reference)
+- [Security & Legal Compliance](#security--legal-compliance)
+- [License](#license)
+
+---
+
+<a id="overview"></a>
+## 🔎 Overview
+
+**CaseVault** is an enterprise-grade digital document and forensic evidence management platform built for law enforcement agencies, cybercrime investigative cells, forensic laboratories, public prosecutors, and judicial courts.
 
 It addresses critical vulnerabilities in judicial records management:
-- **Tampering & Spoliation:** Traditional file shares and paper records lack continuous cryptographic integrity validation. CASEVAULT computes binary SHA-256 hashes of every file and anchors them in an immutable cryptographic hash chain.
-- **Broken Chain of Custody:** Physical exhibits and digital forensic media frequently suffer from unverifiable handoffs. CASEVAULT records every transfer step with timestamping, custodian identities, and transfer reason.
-- **Unverified Access & Leakage:** Enforces fine-grained Role-Based Access Control (RBAC) across six official roles.
-- **Statutory Auditability:** Automatically logs every login, document verification, view, and blocked attempt in an immutable system audit trail conforming to Section 65B of the Indian Evidence Act.
+
+| Problem | CaseVault's Solution |
+|---|---|
+| 🔐 **Tampering & Spoliation** — Traditional file shares and paper records lack continuous cryptographic integrity validation | Computes binary **SHA-256** hashes of every file and anchors them in an **immutable cryptographic hash chain** |
+| 🔗 **Broken Chain of Custody** — Physical exhibits and digital forensic media suffer unverifiable handoffs | Records every transfer step with timestamping, custodian identities, and transfer reason |
+| 👥 **Unverified Access & Leakage** — Uncontrolled document access across investigative teams | Enforces fine-grained **Role-Based Access Control (RBAC)** across six official roles |
+| ⚖️ **Statutory Auditability** — Records must withstand legal scrutiny in court | Automatically logs every login, verification, view, and blocked attempt in an immutable audit trail conforming to **Section 65B of the Indian Evidence Act** |
 
 ---
 
-## 2. System Architecture
+<a id="key-features"></a>
+## ✨ Key Features
+
+- 🔒 **Cryptographic Integrity Ledger** — Append-only SHA-256 hash chain, mathematically verifiable end-to-end
+- 📁 **Secure Document Vault** — Cloudinary-backed encrypted storage with bit-exact tamper verification
+- 🧾 **Chain of Custody Tracking** — Full custody trail for physical exhibits and digital forensic media
+- 🛡️ **Six-Tier RBAC** — Purpose-built roles for officers, forensic examiners, prosecutors, courts, and admins
+- 📊 **Executive Reporting** — Real-time aggregates and CSV export for case, document, and ledger statistics
+- 📜 **Immutable Audit Trail** — Every system action logged for legal admissibility
+
+---
+
+<a id="system-architecture"></a>
+## 🏗️ System Architecture
 
 ```
                     ┌────────────────────────────────────────────────────────┐
-                    │                   CLIENT LAYER                         │
+                    │                   CLIENT LAYER                        │
                     │         React 18 + Vite + Lucide + Modern CSS          │
                     └───────────────────────────┬────────────────────────────┘
-                                                │
-                                    REST APIs / Proxy (/api)
-                                                │
-                                                ▼
+                                                 │
+                                     REST APIs / Proxy (/api)
+                                                 │
+                                                 ▼
                     ┌────────────────────────────────────────────────────────┐
                     │                   BACKEND LAYER                        │
                     │   Node.js + Express.js API Server (Port 5000)          │
-                    │   - Helmet Security Headers & API Rate Limiting        │
-                    │   - JWT Authentication & RBAC Role Guards              │
-                    │   - Multer File Validation (MIME & Extension Guards)   │
-                    │   - SHA-256 Cryptographic Engine & Hash-Chain Ledger   │
-                    │   - Forensic Audit Trail Engine                        │
+                    │   • Helmet Security Headers & API Rate Limiting        │
+                    │   • JWT Authentication & RBAC Role Guards              │
+                    │   • Multer File Validation (MIME & Extension Guards)   │
+                    │   • SHA-256 Cryptographic Engine & Hash-Chain Ledger   │
+                    │   • Forensic Audit Trail Engine                        │
                     └───────────────┬────────────────────────┬───────────────┘
-                                    │                        │
-                        Mongoose Connection       Cloudinary SDK / Stream
-                                    │                        │
-                                    ▼                        ▼
+                                    │                         │
+                        Mongoose Connection         Cloudinary SDK / Stream
+                                    │                         │
+                                    ▼                         ▼
                     ┌────────────────────────┐   ┌───────────────────────────┐
                     │     MONGODB DATABASE   │   │     CLOUDINARY STORAGE    │
-                    │  - Users & Profiles    │   │  - Legal Documents Vault  │
-                    │  - Case Dossiers & FIR │   │  - Forensic Evidence Files│
-                    │  - Document Records    │   │  - Exhibit Photos & Dumps │
-                    │  - Chain of Custody    │   │  - Secure CDN Delivery    │
-                    │  - Integrity Ledger    │   └───────────────────────────┘
-                    │  - Immutable Audit Log │
+                    │  • Users & Profiles    │   │  • Legal Documents Vault  │
+                    │  • Case Dossiers & FIR │   │  • Forensic Evidence Files│
+                    │  • Document Records    │   │  • Exhibit Photos & Dumps │
+                    │  • Chain of Custody    │   │  • Secure CDN Delivery    │
+                    │  • Integrity Ledger    │   └───────────────────────────┘
+                    │  • Immutable Audit Log │
                     └────────────────────────┘
 ```
 
 ---
 
-## 3. Technology Stack
+<a id="technology-stack"></a>
+## 🧰 Technology Stack
 
-- **Backend:** Node.js, Express.js, Mongoose (MongoDB ODM), Cloudinary SDK, Multer, Helmet, CORS, Express Rate Limit, JSON Web Tokens (JWT), BcryptJS.
-- **Frontend:** React 18, Vite, React Router 7, Lucide React, Custom Dark/Glassmorphic Design System.
-- **Database:** MongoDB (Local or MongoDB Atlas) storing normalized collections with snake_case JSON serialization.
-- **Storage Engine:** Cloudinary cloud storage for private encrypted document and forensic exhibit delivery.
-- **Security & Cryptography:** 
-  - SHA-256 binary file hashing ($256\text{-bit}$ cryptographic fingerprint).
-  - Append-only hash chain ledger: $\text{Current Hash} = \text{SHA256}(\text{previous\_hash} + \text{event\_type} + \text{entity\_id} + \text{timestamp} + \text{data})$.
-  - Mathematical zero-tamper chain verification.
-  - Bcrypt password encryption (salt rounds: 10).
+| Layer | Technologies |
+|---|---|
+| **Backend** | Node.js, Express.js, Mongoose (MongoDB ODM), Cloudinary SDK, Multer, Helmet, CORS, Express Rate Limit, JSON Web Tokens (JWT), BcryptJS |
+| **Frontend** | React 18, Vite, React Router 7, Lucide React, Custom Dark/Glassmorphic Design System |
+| **Database** | MongoDB (Local or MongoDB Atlas) — normalized collections, snake_case JSON serialization |
+| **Storage** | Cloudinary cloud storage for encrypted document and forensic exhibit delivery |
+| **Security & Cryptography** | SHA-256 binary file hashing (256-bit fingerprint) · Append-only hash-chain ledger · Bcrypt password hashing (10 salt rounds) |
+
+**Hash-chain formula:**
+
+```
+Current Hash = SHA256(previous_hash + event_type + entity_id + timestamp + data)
+```
 
 ---
 
-## 4. Folder Structure
+<a id="folder-structure"></a>
+## 📂 Folder Structure
+
+<details>
+<summary><strong>Click to expand full project structure</strong></summary>
 
 ```
 secure-document-management-system/
@@ -81,10 +135,10 @@ secure-document-management-system/
 │   │   ├── db.js                   # Mongoose MongoDB connection & health check
 │   │   └── cloudinary.js           # Cloudinary configuration & upload stream helpers
 │   ├── controllers/
-│   │   ├── authController.js       # Officer registration, login, profile, and audit logging
+│   │   ├── authController.js       # Officer registration, login, profile, audit logging
 │   │   ├── caseController.js       # Case dossiers, FIR tracking, ledger anchoring
-│   │   ├── documentController.js   # Cloudinary storage, SHA-256 hashing, bit-exact verification
-│   │   ├── evidenceController.js   # Forensic exhibits, multi-step chain of custody
+│   │   ├── documentController.js   # Cloudinary storage, SHA-256 hashing, verification
+│   │   ├── evidenceController.js   # Forensic exhibits, chain of custody
 │   │   ├── integrityController.js  # Cryptographic hash-chain query & verification
 │   │   ├── auditController.js      # Immutable system audit trail queries
 │   │   └── reportController.js     # Statistical reporting & aggregates
@@ -92,8 +146,8 @@ secure-document-management-system/
 │   │   ├── auth.js                 # JWT verification and RBAC role guards
 │   │   └── upload.js               # Multer memory storage & MIME whitelist guards
 │   ├── models/
-│   │   ├── User.js                 # User credentials, bcrypt hash, and RBAC roles
-│   │   ├── Case.js                 # Legal cases, FIR numbers, status, and members
+│   │   ├── User.js                 # User credentials, bcrypt hash, RBAC roles
+│   │   ├── Case.js                 # Legal cases, FIR numbers, status, members
 │   │   ├── Document.js             # Vault documents, Cloudinary paths, SHA-256 hashes
 │   │   ├── Evidence.js             # Forensic exhibits, custody logs, baseline hashes
 │   │   ├── IntegrityBlock.js       # Immutable SHA-256 hash-chain blocks
@@ -121,7 +175,7 @@ secure-document-management-system/
 │   │   ├── pages/
 │   │   │   ├── LandingPage.jsx     # Public NCRB / MHA portal landing
 │   │   │   ├── Login.jsx           # Secure officer authentication
-│   │   │   ├── Register.jsx        # Dynamic role-first registration with badge verification
+│   │   │   ├── Register.jsx        # Role-first registration with badge verification
 │   │   │   ├── Dashboard.jsx       # Command Center overview and real-time metrics
 │   │   │   ├── CaseList.jsx        # Case files directory with filters
 │   │   │   ├── CaseDetail.jsx      # Dossier overview, documents, and exhibits
@@ -145,14 +199,17 @@ secure-document-management-system/
 └── README.md
 ```
 
+</details>
+
 ---
 
-## 5. Role-Based Access Control (RBAC)
+<a id="role-based-access-control-rbac"></a>
+## 🔑 Role-Based Access Control (RBAC)
 
-CASEVAULT provides six distinct role tiers:
+CaseVault provides six distinct role tiers:
 
 | Role Identifier | Role Name | Primary Responsibilities |
-| :--- | :--- | :--- |
+|---|---|---|
 | `INVESTIGATING_OFFICER` | Investigating Officer (IO) / Police | Register FIRs, upload investigation files, seize exhibits, update case status |
 | `FORENSIC_OFFICER` | Forensic Examiner (CFSL) | Analyze digital exhibits, upload forensic lab reports, verify hashes |
 | `LEGAL_OFFICER` | Public Prosecutor / Legal Officer | Inspect case dossiers, review witness statements, inspect audit trails |
@@ -162,9 +219,48 @@ CASEVAULT provides six distinct role tiers:
 
 ---
 
-## 6. Environment Configuration (`backend/.env`)
+<a id="getting-started"></a>
+## 🚀 Getting Started
 
-Configure the following variables in `backend/.env`:
+### Prerequisites
+
+- **Node.js** v18 or higher
+- **MongoDB** — running locally on port `27017`, or a MongoDB Atlas connection URI
+- **Cloudinary Account** — free tier available at [cloudinary.com](https://cloudinary.com)
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/AbnishAIML/casevault.git
+cd casevault
+```
+
+### 2. Start the backend API server
+
+```bash
+cd backend
+npm install
+npm run dev
+```
+
+The server starts on `http://localhost:5000` and automatically connects to MongoDB and Cloudinary.
+
+### 3. Start the frontend client
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+The application opens on `http://localhost:5173`.
+
+---
+
+<a id="environment-configuration"></a>
+## ⚙️ Environment Configuration
+
+Create a `backend/.env` file using `backend/.env.example` as a template:
 
 ```env
 PORT=5000
@@ -188,82 +284,91 @@ MAX_FILE_SIZE_BYTES=52428800
 ALLOWED_MIME_TYPES=application/pdf,image/png,image/jpeg,image/tiff,text/plain,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document
 ```
 
----
-
-## 7. Installation & Quick Start
-
-### Prerequisites
-- **Node.js** (v18 or higher)
-- **MongoDB** (running locally on port `27017` or via MongoDB Atlas URI)
-- **Cloudinary Account** (Free tier from [cloudinary.com](https://cloudinary.com))
-
-### 1. Start the Backend API Server
-```bash
-cd backend
-npm install
-npm run dev
-```
-*The server will start on `http://localhost:5000` and automatically connect to MongoDB and Cloudinary.*
-
-### 2. Start the Frontend Client
-```bash
-cd frontend
-npm install
-npm run dev
-```
-*The application will open on `http://localhost:5173`.*
+> ⚠️ **Never commit `.env` to version control.** Keep secrets isolated to the backend runtime.
 
 ---
 
-## 8. REST API Reference
+<a id="api-reference"></a>
+## 📡 API Reference
 
-### Authentication (`/api/auth`)
-- `POST /api/auth/register` — Register a new officer account (active immediately, zero email friction).
-- `POST /api/auth/login` — Authenticate with email and password to receive JWT.
-- `GET /api/auth/me` — Retrieve authenticated officer profile.
-- `POST /api/auth/logout` — Revoke session and record audit event.
+### Authentication `/api/auth`
 
-### Case Dossiers (`/api/cases`)
-- `GET /api/cases` — Retrieve cases with optional search, status, and priority filters.
-- `POST /api/cases` — Register a new case dossier (anchored in cryptographic ledger).
-- `GET /api/cases/:id` — Get case details, associated documents, and evidence items.
-- `PUT /api/cases/:id` — Update case information or status.
-- `PUT /api/cases/:id/archive` — Archive a case file.
+| Method | Endpoint | Description |
+|---|---|---|
+| `POST` | `/api/auth/register` | Register a new officer account |
+| `POST` | `/api/auth/login` | Authenticate with email and password to receive JWT |
+| `GET` | `/api/auth/me` | Retrieve authenticated officer profile |
+| `POST` | `/api/auth/logout` | Revoke session and record audit event |
 
-### Document Vault (`/api/documents`)
-- `GET /api/documents` — Search and filter vault documents.
-- `POST /api/documents` — Upload document to Cloudinary, calculate SHA-256 hash, anchor in ledger.
-- `GET /api/documents/:id` — Retrieve document details and Cloudinary download link.
-- `POST /api/documents/:id/verify` — Execute live SHA-256 bit-exact tamper verification against the ledger.
-- `POST /api/documents/:id/versions` — Upload an updated document version and chain it to history.
+### Case Dossiers `/api/cases`
 
-### Evidence Locker & Custody (`/api/evidence`)
-- `GET /api/evidence` — List forensic exhibits and seized digital media.
-- `POST /api/evidence` — Log new physical exhibit or digital seizure.
-- `GET /api/evidence/:id` — Retrieve evidence profile and full chain of custody log.
-- `POST /api/evidence/:id/custody` — Transfer custody to another officer/lab (anchored in ledger).
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/cases` | Retrieve cases with optional search, status, and priority filters |
+| `POST` | `/api/cases` | Register a new case dossier (anchored in cryptographic ledger) |
+| `GET` | `/api/cases/:id` | Get case details, associated documents, and evidence items |
+| `PUT` | `/api/cases/:id` | Update case information or status |
+| `PUT` | `/api/cases/:id/archive` | Archive a case file |
 
-### Cryptographic Ledger (`/api/integrity`)
-- `GET /api/integrity` — Retrieve all chronological cryptographic ledger blocks.
-- `POST /api/integrity/verify` — Perform mathematical recursive link verification across the entire hash chain.
+### Document Vault `/api/documents`
 
-### System Audit Trail (`/api/audit`)
-- `GET /api/audit` — Retrieve immutable system audit events with filter by action, entity, and result.
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/documents` | Search and filter vault documents |
+| `POST` | `/api/documents` | Upload document, calculate SHA-256 hash, anchor in ledger |
+| `GET` | `/api/documents/:id` | Retrieve document details and Cloudinary download link |
+| `POST` | `/api/documents/:id/verify` | Execute live SHA-256 bit-exact tamper verification against the ledger |
+| `POST` | `/api/documents/:id/versions` | Upload an updated document version and chain it to history |
 
-### Reports & Analytics (`/api/reports`)
-- `GET /api/reports/stats` — Get real-time aggregates (total cases, verified documents, storage used, ledger blocks).
+### Evidence Locker & Custody `/api/evidence`
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/evidence` | List forensic exhibits and seized digital media |
+| `POST` | `/api/evidence` | Log new physical exhibit or digital seizure |
+| `GET` | `/api/evidence/:id` | Retrieve evidence profile and full chain of custody log |
+| `POST` | `/api/evidence/:id/custody` | Transfer custody to another officer/lab (anchored in ledger) |
+
+### Cryptographic Ledger `/api/integrity`
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/integrity` | Retrieve all chronological cryptographic ledger blocks |
+| `POST` | `/api/integrity/verify` | Perform recursive link verification across the entire hash chain |
+
+### System Audit Trail `/api/audit`
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/audit` | Retrieve immutable system audit events, filterable by action, entity, and result |
+
+### Reports & Analytics `/api/reports`
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/reports/stats` | Get real-time aggregates (total cases, verified documents, storage used, ledger blocks) |
 
 ---
 
-## 9. Security & Legal Compliance
+<a id="security--legal-compliance"></a>
+## 🔐 Security & Legal Compliance
 
-1. **Tamper Prevention:** Every file undergoes binary SHA-256 hashing. Modifying a single bit in a file changes the hash completely, causing instant verification failure.
-2. **Hash-Chain Immutability:** Each block references the SHA-256 hash of the previous block, creating a tamper-evident blockchain-like structure.
-3. **Chain of Custody Integrity:** Evidentiary transfers cannot be erased or retroactively modified, meeting legal standards under Section 65B of the Indian Evidence Act.
-4. **Environment Isolation:** Secrets and API keys are stored exclusively on the server in `backend/.env` and are never exposed to the frontend.
+1. **Tamper Prevention** — Every file undergoes binary SHA-256 hashing. Modifying a single bit changes the hash completely, causing instant verification failure.
+2. **Hash-Chain Immutability** — Each block references the SHA-256 hash of the previous block, forming a tamper-evident blockchain-like structure.
+3. **Chain of Custody Integrity** — Evidentiary transfers cannot be erased or retroactively modified, meeting legal standards under **Section 65B of the Indian Evidence Act**.
+4. **Environment Isolation** — Secrets and API keys are stored exclusively on the server in `backend/.env` and are never exposed to the frontend.
 
 ---
 
-## 10. License
+<a id="license"></a>
+## 📄 License
 
-Developed under the National Crime Records Bureau (NCRB) & Ministry of Home Affairs (MHA) Problem Statement 26190 Guidelines. For evaluation and official government deployment purposes.
+Developed under the **National Crime Records Bureau (NCRB)** & **Ministry of Home Affairs (MHA)** — Problem Statement 26190 guidelines, for evaluation and official government deployment purposes.
+
+---
+
+<div align="center">
+
+**Repository:** [github.com/AbnishAIML/casevault](https://github.com/AbnishAIML/casevault)
+
+</div>
